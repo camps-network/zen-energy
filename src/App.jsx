@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { Analytics } from "@vercel/analytics/next"
+
 import { db } from "./firebase";
 
 import { ref, onValue } from "firebase/database";
@@ -486,6 +488,7 @@ function App() {
     <div className="min-h-screen bg-neutral-50 text-neutral-900 p-2 sm:p-6">
       <div className="max-w-7xl mx-auto">
         {/* HEADER */}
+        <Analytics />
         <header className="flex items-start justify-between mb-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="w-full sm:w-auto flex items-center gap-3 bg-white border border-neutral-200 px-5 py-3 rounded-2xl shadow-sm">
