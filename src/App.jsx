@@ -50,8 +50,7 @@ function App() {
 
   const [loadingText, setLoadingText] = useState("Initializing...");
 
-  const [showAllMetrics, setShowAllMetrics] =
-  useState(false);
+  const [showAllMetrics, setShowAllMetrics] = useState(false);
 
   // =========================================
   // FETCH FIREBASE DATA
@@ -484,12 +483,12 @@ function App() {
     );
   }
   return (
-<div className="min-h-screen bg-neutral-50 text-neutral-900 p-2 sm:p-6">
+    <div className="min-h-screen bg-neutral-50 text-neutral-900 p-2 sm:p-6">
       <div className="max-w-7xl mx-auto">
         {/* HEADER */}
         <header className="flex items-start justify-between mb-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div className="w-full sm:w-auto flex items-center gap-3 bg-white border border-neutral-200 px-5 py-3 rounded-2xl shadow-sm">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="w-full sm:w-auto flex items-center gap-3 bg-white border border-neutral-200 px-5 py-3 rounded-2xl shadow-sm">
               <div
                 className={`w-3 h-3 rounded-full ${
                   isOnline ? "bg-green-500 animate-pulse" : "bg-red-500"
@@ -510,7 +509,7 @@ function App() {
                 </p>
               </div>
             </div>
-           <div className="w-14 h-14 rounded-2xl bg-white shadow-sm border border-neutral-200 flex items-center justify-center self-start">
+            <div className="w-14 h-14 rounded-2xl bg-white shadow-sm border border-neutral-200 flex items-center justify-center self-start">
               <svg width="34" height="34" viewBox="0 0 120 120" fill="none">
                 <path
                   d="M18 72C30 34 52 32 60 60C68 88 90 86 102 48"
@@ -562,44 +561,51 @@ function App() {
         <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
           <MetricCard
             title="Avg Power"
-            value={
-              filteredLogs.length > 0
-                ? `${(
-                    filteredLogs.reduce((sum, log) => sum + log.avg_power, 0) /
-                    filteredLogs.length
-                  ).toFixed(2)} W`
-                : "--"
-            }
+            value={(() => {
+              const validLogs = filteredLogs.filter(
+                (log) => log.avg_power !== 0
+              );
+
+              if (validLogs.length === 0) return "--";
+
+              return `${(
+                validLogs.reduce((sum, log) => sum + log.avg_power, 0) /
+                validLogs.length
+              ).toFixed(2)} W`;
+            })()}
             subtitle={`Average • ${selectedFilter}`}
           />
-
           <MetricCard
             title="Avg Voltage"
-            value={
-              filteredLogs.length > 0
-                ? `${(
-                    filteredLogs.reduce(
-                      (sum, log) => sum + log.avg_voltage,
-                      0
-                    ) / filteredLogs.length
-                  ).toFixed(2)} V`
-                : "--"
-            }
+            value={(() => {
+              const validLogs = filteredLogs.filter(
+                (log) => log.avg_voltage !== 0
+              );
+
+              if (validLogs.length === 0) return "--";
+
+              return `${(
+                validLogs.reduce((sum, log) => sum + log.avg_voltage, 0) /
+                validLogs.length
+              ).toFixed(2)} V`;
+            })()}
             subtitle={`Average • ${selectedFilter}`}
           />
 
           <MetricCard
             title="Avg Current"
-            value={
-              filteredLogs.length > 0
-                ? `${(
-                    filteredLogs.reduce(
-                      (sum, log) => sum + log.avg_current,
-                      0
-                    ) / filteredLogs.length
-                  ).toFixed(2)} A`
-                : "--"
-            }
+            value={(() => {
+              const validLogs = filteredLogs.filter(
+                (log) => log.avg_current !== 0
+              );
+
+              if (validLogs.length === 0) return "--";
+
+              return `${(
+                validLogs.reduce((sum, log) => sum + log.avg_current, 0) /
+                validLogs.length
+              ).toFixed(2)} A`;
+            })()}
             subtitle={`Average • ${selectedFilter}`}
           />
 
@@ -682,11 +688,11 @@ function App() {
             </div>
           )}
 
-<div className="h-[420px] rounded-2xl border border-neutral-100 bg-neutral-50 p-1 sm:p-4 overflow-hidden">
-  <div className="w-full h-full">
-    <Line data={chartData} options={chartOptions} />
-  </div>
-</div>
+          <div className="h-[420px] rounded-2xl border border-neutral-100 bg-neutral-50 p-1 sm:p-4 overflow-hidden">
+            <div className="w-full h-full">
+              <Line data={chartData} options={chartOptions} />
+            </div>
+          </div>
         </section>
 
         {/* TABLE */}
