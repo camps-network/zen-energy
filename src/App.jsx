@@ -782,7 +782,7 @@ function MetricCard({ title, value, subtitle }) {
 
       <h2 className="text-3xl font-semibold tracking-tight">{value}</h2>
 
-      <p className="text-sm text-neutral-500 mt-2">{subtitle}</p>
+      <p className="text-sm text-neutral-400 mt-2">{subtitle}</p>
     </div>
   );
 }
